@@ -1,0 +1,33 @@
+#⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
+#                    .prettierrc.yaml
+#⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
+
+# To enable Tailwind CSS class sorting:
+# 1. Install: pnpm add -D prettier prettier-plugin-tailwindcss
+# 2. Uncomment the plugins section below
+plugins:
+  - prettier-plugin-tailwindcss
+#  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
+printWidth: 95
+tabWidth: 2
+useTabs: false
+semi: true
+singleQuote: true
+jsxSingleQuote: true
+trailingComma: all
+bracketSpacing: true
+bracketSameLine: false
+arrowParens: always
+endOfLine: lf
+htmlWhitespaceSensitivity: strict
+overrides:
+  - files: [
+    "*.js",
+    "*.jsx",
+    "*.ts",
+    "*.tsx",
+    "*.html",
+  ]
+    options:
+      parser: typescript
+#⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
