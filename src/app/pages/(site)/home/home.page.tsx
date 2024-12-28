@@ -28,7 +28,7 @@ export default function HomePage() {
             'mx-auto mt-6', // Margin classes
             'max-w-6xl max-lg:max-w-3xl', // Width constraints
             'rounded-lg', // Border styles
-            'bg-oh-yea-blue', // Background color
+            'bg-black', // Background color
           ),
         )}
       >
@@ -71,19 +71,19 @@ export default function HomePage() {
             {/* Social media icons left side ∞∞∞ */}
             <ul className='mt-12 flex cursor-pointer space-x-4'>
               {/* FACEBOOK ICON LINK ∞∞∞ */}
-              <li className='flex h-10 w-10 items-center justify-center rounded-full bg-gray-600 hover:bg-thumbsup-yellow'>
+              <li className='flex h-10 w-10 items-center justify-center rounded-full bg-reggie-orange hover:bg-thumbsup-yellow'>
                 <a href='javascript:void(0)'>
                   <FWTSocialIconV2 iconName='facebook' className='h-5 w-5' />
                 </a>
               </li>
               {/* INSTAGRAM ICON LINK ∞∞∞ */}
-              <li className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-600 hover:bg-thumbsup-yellow'>
+              <li className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-reggie-orange hover:bg-thumbsup-yellow'>
                 <a href='javascript:void(0)'>
                   <FWTSocialIconV2 iconName='instagram' className='h-5 w-5' />
                 </a>
               </li>
               {/* THREADS ICON LINK ∞∞∞ */}
-              <li className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-600 hover:bg-thumbsup-yellow'>
+              <li className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-reggie-orange hover:bg-thumbsup-yellow'>
                 <a href='javascript:void(0)'>
                   <FaThreads className='h-5 w-5 text-white' />
                 </a>
@@ -143,25 +143,33 @@ export default function HomePage() {
               <input
                 type='text'
                 placeholder='Name'
+                required
+                minLength={2}
                 className='w-full rounded-lg px-4 py-3 text-sm text-gray-800'
               />
               <input
-                type='email'
-                placeholder='Email'
+                type='tel'
+                placeholder='Phone'
+                required
+                pattern='[0-9+]+'
+                title='Please enter only numbers and + symbol'
                 className='w-full rounded-lg px-4 py-3 text-sm text-gray-800'
               />
               <input
                 type='text'
                 placeholder='Subject'
+                required
                 className='w-full rounded-lg px-4 py-3 text-sm text-gray-800'
               />
               <textarea
                 placeholder='Message'
+                required
+                minLength={10}
                 rows={6}
                 className='w-full rounded-lg px-4 pt-3 text-sm text-gray-800'
               ></textarea>
               <button
-                type='button'
+                type='submit'
                 className='!mt-6 flex w-full items-center justify-center rounded-lg bg-thumbsup-dark px-4 py-3 text-sm tracking-wide text-white hover:bg-[#a91079e2]'
               >
                 <FaRegPaperPlane className='mr-2 w-6 font-semibold' />
