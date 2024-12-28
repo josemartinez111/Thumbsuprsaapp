@@ -6,7 +6,8 @@
 import { Outlet } from 'react-router-dom';
 import { Fragment, FunctionComponent } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Footer, Navbar } from '../../../components';
+import { fenwayBG } from '../../../assets';
+import { BGImageOverlay, Footer, Navbar } from '../../../components';
 import { useDarkModeStore } from '../../../lib';
 import clsx from 'clsx';
 // ⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -14,7 +15,7 @@ import clsx from 'clsx';
 export const RootLayout: FunctionComponent = () => {
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   const { isDarkMode } = useDarkModeStore();
-  
+
   const rootLayoutContainer = twMerge(
     clsx(
       'min-h-screen bg-white text-gray-700 transition-colors',
@@ -24,21 +25,24 @@ export const RootLayout: FunctionComponent = () => {
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   return (
     <Fragment>
-      {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */ }
-      <div className={ isDarkMode ? 'dark' : '' }>
-        <div className={ rootLayoutContainer }>
-          {/* Navbar Component ∞∞∞ */ }
+      {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
+      <div className={isDarkMode ? 'dark' : ''}>
+        {/* Background with low z-index */}
+        <BGImageOverlay srcImage={fenwayBG} zIndex={0} overlayOpacity='75' />
+        {/* Separate Overlay */}
+        <div className={rootLayoutContainer}>
+          {/* Navbar Component ∞∞∞ */}
           <Navbar />
-          {/* Main Content ∞∞∞ */ }
+          {/* Main Content ∞∞∞ */}
           <main>
-            {/* Renders the child route's element, if there is one. */ }
+            {/* Renders the child route's element, if there is one. */}
             <Outlet />
           </main>
-          {/* Footer Component ∞∞∞ */ }
+          {/* Footer Component ∞∞∞ */}
           <Footer />
         </div>
       </div>
-      {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */ }
+      {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
     </Fragment>
   );
 };
