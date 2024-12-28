@@ -25,14 +25,9 @@ export const Navbar: FunctionComponent = () => {
 
   // Use the IconName type directly for the array
   const socialIconsOpts: Array<SocialIconOptions> = [
-    { icon: 'youtube', href: '#' },
     { icon: 'facebook', href: '#' },
     { icon: 'instagram', href: '#' },
-    { icon: 'tiktok', href: '#' },
-    {
-      icon: 'threads',
-      href: '#',
-    },
+    { icon: 'threads', href: '#' },
   ];
 
   // Navigation container classes
@@ -164,7 +159,7 @@ export const Navbar: FunctionComponent = () => {
                 condition={isDarkMode}
                 className={twMerge(
                   clsx(
-                    'w-10 desktop:w-10',
+                    'mr-11 w-10 desktop:w-10',
                     'tablet:h-10 tablet:w-10',
                     'transition-transform duration-200',
                     'hover:scale-110',
