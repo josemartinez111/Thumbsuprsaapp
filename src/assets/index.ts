@@ -11,6 +11,7 @@
 // MISC->route
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 export { default as image404 } from './images/misc/404-image.png';
+export { default as fenwayBG } from './images/misc/fenway-city-of-boston.jpg';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // PLACEHOLDERS->route
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
