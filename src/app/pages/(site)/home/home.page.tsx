@@ -35,10 +35,10 @@ export default function HomePage() {
         <div className='grid items-center gap-14 p-4 font-[sans-serif] sm:p-8 lg:grid-cols-2'>
           {/* LEFT SIDE OF THE FORM SECTION ∞∞∞ */}
           <div>
-            <h1 className='text-4xl font-bold text-white'>Get in Touch</h1>
+            <h1 className='text-4xl font-bold text-white'>Are you Safe & Out of Danger</h1>
             <p className='mt-4 text-sm leading-relaxed text-gray-300'>
-              Have some big idea or brand to develop and need help? Then reach out we'd love to
-              hear about your project and provide help.
+              Stuck and need help? Provide us with a little information and one of our Service
+              Technicians will be right out to help
             </p>
 
             {/* Business contact info left side ∞∞∞ */}
@@ -46,24 +46,33 @@ export default function HomePage() {
               {/* EMAIL INFO LEFT SIDE ∞∞∞ */}
               <li className='flex items-center'>
                 <MdOutlineMailOutline />
-                <a href='javascript:void(0)' className='ml-4 text-sm text-white'>
-                  info@example.com
+                <a href='mailto:thumbsuprsa@gmail.com' className='ml-4 text-sm text-white'>
+                  thumbsuprsa@gmail.com
                 </a>
               </li>
 
               {/* PHONE INFO LEFT SIDE ∞∞∞ */}
               <li className='flex items-center'>
                 <IoIosPhonePortrait />
-                <a href='javascript:void(0)' className='ml-4 text-sm text-white'>
-                  +158 996 888
+                <a href='tel:+19787733995' className='ml-4 text-sm text-white'>
+                  978-773-3995
                 </a>
               </li>
 
               {/* LOCATION INFO LEFT SIDE ∞∞∞ */}
               <li className='flex items-center'>
                 <GrLocation />
-                <a href='javascript:void(0)' className='ml-4 text-sm text-white'>
-                  123 Street 256 House
+                {/* 
+                TODO: For an address link, you can use Google Maps with an encoded URL.
+                Here's how to make it open Google Maps with that location: 
+                */}
+                <a
+                  href='https://www.google.com/maps/search/?api=1&query=Lawrence+MA+01843'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='ml-4 text-sm text-white'
+                >
+                  Lawrence MA 01843
                 </a>
               </li>
             </ul>

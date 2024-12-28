@@ -102,7 +102,7 @@ export const Navbar: FunctionComponent = () => {
             )}
           >
             <a
-              href='tel:+1234567890'
+              href='tel:+19787733995'
               className={twMerge(
                 clsx(
                   'group flex items-center gap-2',
@@ -143,7 +143,7 @@ export const Navbar: FunctionComponent = () => {
                     ),
                   )}
                 >
-                  123-456-7890
+                  978-773-3995
                 </span>
               </div>
             </a>
