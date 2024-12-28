@@ -4,27 +4,24 @@
 //                       IMPORTS
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 import { FunctionComponent, Fragment } from 'react';
-import { FiMenu } from 'react-icons/fi';
+import { FaPhone } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
-import { ThanosTransparent } from '../../../assets';
+import { TransparentTruckSM } from '../../../assets';
 import { FWTSocialIconV2, FWTImage, SocialIconOptions } from '../../../components';
 import { useDarkModeStore } from '../../../lib';
-import { useNavLinks } from '../../../router/router-composables-hooks/useNavLinks.ts';
-import { SideBarNav } from './SideBarNav.tsx';
 import { ToggleDarkmodeIcons } from './ToggleDarkmodeIcons.tsx';
 import clsx from 'clsx';
-import { atom, useAtom } from 'jotai';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 // Atom for managing sidebar state
-const sidebarAtom = atom(false);
+// const sidebarAtom = atom(false);
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export const Navbar: FunctionComponent = () => {
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-  const navLinks = useNavLinks();
+  // const navLinks = useNavLinks();
   const { isDarkMode, toggleDarkMode } = useDarkModeStore();
-  const [isMenuOpen, updateIsMenuOpen] = useAtom(sidebarAtom);
+  // const [isMenuOpen, updateIsMenuOpen] = useAtom(sidebarAtom);
 
   // Use the IconName type directly for the array
   const socialIconsOpts: Array<SocialIconOptions> = [
@@ -38,17 +35,20 @@ export const Navbar: FunctionComponent = () => {
     },
   ];
 
+  // Navigation container classes
   const navContainerClasses = twMerge(
     clsx(
-      'relative mx-auto pt-6 flex h-[7rem] w-full items-center',
-      ' justify-between border-b border-transparent bg-transparent px-8',
+      'relative mx-auto flex h-[5rem] w-full items-center',
+      'justify-between border-b border-transparent bg-transparent',
+      'px-4 pt-4',
+      'tablet:h-[7rem] tablet:px-8 tablet:pt-6',
     ),
   );
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
-  const handleToggleMenu = () => {
-    updateIsMenuOpen((previousState: boolean) => !previousState);
-  };
+  // const handleToggleMenu = () => {
+  //   updateIsMenuOpen((previousState: boolean) => !previousState);
+  // };
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   return (
     <Fragment>
@@ -56,117 +56,148 @@ export const Navbar: FunctionComponent = () => {
       <header>
         <nav className={navContainerClasses}>
           {/* LOGO ∞∞∞ */}
-          <div className='inline-flex'>
+          <div className='flex flex-shrink-0'>
             <a className='_o6689fn' href='/'>
-              {/* Dark/Light text logo toggle ∞∞∞ */}
-              <div className='md:block'>
+              <div className='w-full'>
                 {/* Show White Text in Dark Mode */}
                 <FWTImage
-                  src={ThanosTransparent}
+                  src={TransparentTruckSM}
                   alt='Placeholder white'
-                  className='ml-[1.2rem] bg-transparent items-center mb-3 hidden h-12 w-auto object-contain tablet:h-16 desktop:h-24 dark:block'
+                  className={twMerge(
+                    clsx(
+                      'ml-0 bg-transparent',
+                      'h-14 w-auto items-center',
+                      'object-contain',
+                      'tablet:ml-4 tablet:h-16',
+                      'desktop:h-36',
+                      'hidden dark:block',
+                    ),
+                  )}
                 />
                 {/* Show Black Text in Light Mode */}
                 <FWTImage
-                  src={ThanosTransparent}
+                  src={TransparentTruckSM}
                   alt='Placeholder black text'
-                  className='ml-[1.2rem] bg-transparent mb-3 block h-12 w-auto object-contain tablet:h-16 desktop:h-24 dark:hidden'
+                  className={twMerge(
+                    clsx(
+                      'ml-0 block h-14',
+                      'w-auto bg-transparent',
+                      'object-contain',
+                      'tablet:ml-4 tablet:h-16',
+                      'desktop:h-36',
+                      'dark:hidden',
+                    ),
+                  )}
                 />
               </div>
             </a>
           </div>
           {/* END OF LOGO ∞∞∞ */}
 
-          {/* SOCIAL ICONS ∞∞∞ */}
+          {/* PHONE NUMBER ∞∞∞ */}
           <div
             className={twMerge(
               clsx(
-                'hidden items-center gap-2 pl-16 text-black tablet:flex',
-                'tablet:gap-6 desktop:gap-8',
+                'hidden',
+                'tablet:flex tablet:items-center tablet:gap-2',
+                'tablet:ml-8 tablet:mr-8',
+                'text-black dark:text-snow-white',
+                'transition-colors duration-200',
               ),
             )}
           >
-            {socialIconsOpts.map(({ icon, href }: SocialIconOptions) => (
-              <FWTSocialIconV2
-                key={icon}
-                iconName={icon}
-                href={href} // Pass href from the object
-                className={twMerge(
-                  clsx(
-                    'w-3 text-black',
-                    'tablet:h-6 tablet:w-6 desktop:w-6',
-                    'dark:text-snow-white',
-                  ),
-                )}
-              />
-            ))}
-          </div>
-          {/* END OF SOCIAL ICONS ∞∞∞ */}
-
-          {/* Hamburger Button and Toggle Icons ∞∞∞ */}
-          <div className='flex-initial'>
-            <div
+            <a
+              href='tel:+1234567890'
               className={twMerge(
                 clsx(
-                  'relative ml-32 flex items-center',
-                  'justify-end space-x-2',
-                  'active:opacity-10',
+                  'group flex items-center gap-2',
+                  'rounded-lg border-2',
+                  'border-reggie-orange dark:border-thumbsup-yellow',
+                  'px-3 py-1',
+                  'tablet:gap-3 tablet:px-4 tablet:py-2',
+                  'transition-all duration-300 hover:scale-105',
                 ),
               )}
             >
-              {/* Toggle Darkmode Icons ∞∞∞ */}
+              <FaPhone
+                className={twMerge(
+                  clsx(
+                    'h-5 w-5 animate-pulse text-reggie-orange',
+                    'group-hover:animate-none dark:text-thumbsup-yellow',
+                  ),
+                )}
+              />
+              <div className='flex flex-col items-start'>
+                <span
+                  className={twMerge(
+                    clsx(
+                      'font-audiowide text-xs font-bold',
+                      'tracking-wider text-reggie-orange',
+                      'tablet:text-sm dark:text-thumbsup-yellow',
+                    ),
+                  )}
+                >
+                  CALL NOW
+                </span>
+                <span
+                  className={twMerge(
+                    clsx(
+                      'text-base font-medium',
+                      'group-hover:text-reggie-orange',
+                      'tablet:text-lg dark:group-hover:text-thumbsup-yellow',
+                    ),
+                  )}
+                >
+                  123-456-7890
+                </span>
+              </div>
+            </a>
+          </div>
+          {/* END OF PHONE NUMBER ∞∞∞ */}
+
+          {/* Right Side Group ∞∞∞ */}
+          <div className='flex items-center gap-4 tablet:gap-6'>
+            {/* Toggle Darkmode Icons ∞∞∞ */}
+            <div className='relative flex items-center'>
               <ToggleDarkmodeIcons
                 onClick={toggleDarkMode}
                 condition={isDarkMode}
-                className='ml-[0.75rem] scale-75 desktop:w-auto desktop:scale-100'
-                sunClassName='text-oh-yea-blue-light'
-                moonClassName='text-netflix-red'
-              />
-
-              {/* Hamburger Button */}
-              <button
-                type='button'
                 className={twMerge(
                   clsx(
-                    'flex scale-75 items-center rounded-full border px-5 py-1 hover:shadow-lg',
-                    'border-black dark:border-white',
+                    'w-10 desktop:w-10',
+                    'tablet:h-10 tablet:w-10',
+                    'transition-transform duration-200',
+                    'hover:scale-110',
                   ),
                 )}
-                onClick={handleToggleMenu}
-              >
-                {/* Hamburger Icon */}
-                <FiMenu className='w-11 text-current desktop:h-5 desktop:w-5 dark:text-snow-white' />
+                sunClassName='dark:text-thumbsup-yellow'
+                moonClassName='text-oh-yea-blue'
+              />
+            </div>
 
-                {/* Optional Logo/Image */}
-                <div className='ml-3'>
-                  {/* Show this only in dark mode */}
-                  <FWTImage
-                    src={ThanosTransparent}
-                    alt='Placeholder white'
-                    className='hidden h-[2.5rem] w-auto object-contain desktop:h-[3.5rem] dark:block'
-                  />
-
-                  {/* Show this only in light mode */}
-                  <FWTImage
-                    src={ThanosTransparent}
-                    alt='Placeholder black'
-                    className='block h-[2.5rem] w-auto object-contain desktop:h-[3.5rem] dark:hidden'
-                  />
-                </div>
-              </button>
+            {/* SOCIAL ICONS ∞∞∞ */}
+            <div className='ml-11 flex items-center gap-3 tablet:gap-4'>
+              {socialIconsOpts.map(({ icon, href }: SocialIconOptions) => (
+                <FWTSocialIconV2
+                  key={icon}
+                  iconName={icon}
+                  href={href}
+                  className={twMerge(
+                    clsx(
+                      'desktop:mr-5 desktop:w-8',
+                      'text-black dark:text-snow-white',
+                      'transition-colors duration-200',
+                      'hover:text-reggie-orange dark:hover:text-thumbsup-yellow',
+                      'tablet:h-6 tablet:w-6',
+                    ),
+                  )}
+                />
+              ))}
             </div>
           </div>
-          {/* END LOGIN ∞∞∞ */}
+          {/* END OF SOCIAL ICONS ∞∞∞ */}
         </nav>
       </header>
-      {/* Sidebar navigation */}
-      <SideBarNav
-        navLinks={navLinks}
-        isDarkmode={isDarkMode}
-        toggleDarkMode={toggleDarkMode}
-        isOpen={isMenuOpen}
-        onClose={() => updateIsMenuOpen(false)}
-      />
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
     </Fragment>
   );

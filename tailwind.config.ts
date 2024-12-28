@@ -22,6 +22,7 @@ export default {
       },
       fontFamily: {
         orbitron: ['Orbitron Latin', 'Orbitron', 'sans-serif'],
+        audiowide: ['Audiowide', 'sans-serif'],
       },
       screens: {
         mobile: '320px',
@@ -67,6 +68,8 @@ export default {
         text: 'var(--text-color)',
         cslight: '#ffffff',
         'snow-white': '#FBF5F3',
+        'thumbsup-dark': '#2B2B2C',
+        'thumbsup-yellow': '#F8BD26',
         'nuke-gray': '#908E96',
         'reggie-orange': '#F75C02',
         'pink-friday': '#FF009E',

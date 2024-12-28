@@ -18,7 +18,7 @@ export const RootLayout: FunctionComponent = () => {
   const rootLayoutContainer = twMerge(
     clsx(
       'min-h-screen bg-white text-gray-700 transition-colors',
-      ' duration-300 dark:bg-black dark:text-gray-200',
+      ' duration-300 dark:bg-thumbsup-dark dark:text-gray-200',
     ),
   );
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
