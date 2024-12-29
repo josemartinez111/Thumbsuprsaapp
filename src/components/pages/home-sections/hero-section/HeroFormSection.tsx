@@ -4,50 +4,32 @@
 //                       IMPORTS
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 import { FunctionComponent, Fragment } from 'react';
-import { IconType } from 'react-icons';
-import { FaThreads } from 'react-icons/fa6';
 import { GrLocation } from 'react-icons/gr';
 import { IoIosPhonePortrait } from 'react-icons/io';
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
-import { FWTSocialIconV2, IconNameType } from '../../../utils/FWTSocialIconV2.tsx';
+import { FWTSocialIconV2, IconNameType } from '../../../../components';
 import { ContactForm, FormFieldOptions } from './ContactForm.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
-type CustomIconType = {
-  type: 'custom';
-  name: IconNameType; // Using imported type
+type SocialIconType = {
   href: string;
+  iconName: IconNameType;
+  className?: string;
 };
-
-type ReactIconType = {
-  type: 'react';
-  Icon: IconType;
-  href: string;
-};
-
-type SocialIconOptions = CustomIconType | ReactIconType;
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export const HeroFormSection: FunctionComponent = () => {
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-  const SOCIAL_ICONS: SocialIconOptions[] = [
+  const SOCIAL_ICONS: Array<SocialIconType> = [
+    { href: '/*', iconName: 'facebook', className: 'h-5 w-5' },
     {
-      type: 'custom',
-      name: 'facebook',
-      href: '#',
-    },
-    {
-      type: 'custom',
-      name: 'instagram',
       href: 'https://www.instagram.com/thumbsuproadsideassistance/?hl=en',
+      iconName: 'instagram',
+      className: 'h-5 w-5',
     },
-    {
-      type: 'react',
-      Icon: FaThreads,
-      href: '#',
-    },
+    { href: '/*', iconName: 'threads', className: 'h-5 w-5' },
   ];
 
   const FORM_FIELDS: Array<FormFieldOptions> = [
@@ -148,31 +130,18 @@ export const HeroFormSection: FunctionComponent = () => {
 
             {/* Social media icons left side ∞∞∞ */}
             <ul className='mt-12 flex cursor-pointer space-x-4'>
-              {SOCIAL_ICONS.map((social, index) => (
+              {SOCIAL_ICONS.map(({ href, iconName, className }) => (
                 <li
-                  key={index} // Using a simple index for keys since SOCIAL_ICONS is static
+                  key={iconName}
                   className={twMerge(
                     clsx(
-                      'relative flex h-10 w-10 shrink-0 items-center justify-center', // Ensure proper alignment
-                      'rounded-full bg-reggie-orange hover:bg-thumbsup-yellow', // Background color on hover
-                      'focus-within:ring-2 focus-within:ring-thumbsup-yellow', // Accessibility focus styling
+                      'flex h-10 w-10 shrink-0 items-center justify-center',
+                      'rounded-full bg-reggie-orange hover:bg-thumbsup-yellow',
+                      'focus:ring-2 focus:ring-thumbsup-yellow',
                     ),
                   )}
                 >
-                  {/* Ensure the anchor tag is clickable */}
-                  <a
-                    href={social.href}
-                    className={clsx(
-                      'absolute inset-0 flex items-center justify-center', // Ensure the entire <li> is clickable
-                      'z-10 text-white', // Icon styles
-                    )}
-                  >
-                    {social.type === 'custom' ? (
-                      <FWTSocialIconV2 iconName={social.name} className='h-5 w-5' />
-                    ) : (
-                      <social.Icon className='h-5 w-5' />
-                    )}
-                  </a>
+                  <FWTSocialIconV2 href={href} iconName={iconName} className={className} />
                 </li>
               ))}
             </ul>

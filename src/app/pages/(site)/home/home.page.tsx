@@ -4,7 +4,7 @@
 //                       IMPORTS
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 import { Fragment } from 'react';
-import { HeroFormSection, ThumbsupAccordionInfoSection } from '../../../../components';
+import { HeroFormSection, AccordionInfoSection } from '../../../../components';
 // ⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export default function HomePage() {
@@ -17,7 +17,7 @@ export default function HomePage() {
       {/* HERO SECTION (COMPLETE FORM) ∞∞∞ */}
       <HeroFormSection />
       {/* HERO SECTION (COMPLETE FORM) ∞∞∞ */}
-      <ThumbsupAccordionInfoSection />
+      <AccordionInfoSection />
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
     </Fragment>
   );

@@ -24,40 +24,42 @@ export type FormFieldOptions = {
 type ContactFormProps = {
   formFieldOpts: Array<FormFieldOptions>;
 };
+
+type ServicesOptions =
+  | 'Tire change'
+  | 'Gas fuel delivery'
+  | 'Jump start'
+  | 'Lockout'
+  | 'Diesel Fuel Delivery';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 // Atoms for state management
 const selectedServicesAtom = atom<string[]>([]);
 
 const totalPriceAtom = atom<string>((get) => {
-  const selectedServices = get(selectedServicesAtom);
-  const priceMap: Record<string, number> = {
-    'Fix a flat tire': 50,
-    'Fill gas tank': 30,
-    'Jump start': 40,
-    Lockout: 60,
-    'Diesel Fuel Delivery': 100,
+  const selectedServices = get(selectedServicesAtom) as ServicesOptions[]; // Ensure selectedServices is typed as ServicesOptions[]
+  const priceMap: Record<ServicesOptions, number> = {
+    'Tire change': 85,
+    'Gas fuel delivery': 45,
+    'Jump start': 65,
+    Lockout: 65,
+    'Diesel Fuel Delivery': 70,
   };
 
-  const total = selectedServices.reduce(
-    (total, service) => total + (priceMap[service] || 0),
-    0,
-  );
+  const total = selectedServices.reduce((total, service) => {
+    // Ensure the service is a valid key of ServicesOptions
+    return total + (priceMap[service] || 0);
+  }, 0);
 
   // Format the total as currency
-  return new Intl.NumberFormat('en-US', {
+  const formattedPriceTotal = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
   }).format(total);
-});
 
-type ServicesOptions =
-  | 'Fix a flat tire'
-  | 'Fill gas tank'
-  | 'Jump start'
-  | 'Lockout'
-  | 'Diesel Fuel Delivery';
+  return formattedPriceTotal;
+});
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts }) => {
@@ -66,8 +68,8 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   const [totalPrice] = useAtom(totalPriceAtom);
 
   const services: Array<ServicesOptions> = [
-    'Fix a flat tire',
-    'Fill gas tank',
+    'Tire change',
+    'Gas fuel delivery',
     'Jump start',
     'Lockout',
     'Diesel Fuel Delivery',
@@ -121,6 +123,9 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
               <p className='text-gray-600'>Select one or more services to see the price.</p>
             )}
           </div>
+          <p className='text-center font-bold text-reggie-orange'>
+            All services do not include taxes plus mileage.
+          </p>
         </div>
 
         {/* Input Fields */}
