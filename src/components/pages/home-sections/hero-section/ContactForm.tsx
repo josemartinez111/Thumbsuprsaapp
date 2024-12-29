@@ -89,6 +89,26 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
     <Fragment>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
       <form className='mt-8 cursor-pointer space-y-6 rounded-lg bg-white p-6 shadow-md'>
+        {/* Input Fields */}
+        <div className='space-y-4'>
+          {formFieldOpts.map((field, index) => (
+            <input
+              key={index}
+              {...field}
+              className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
+            />
+          ))}
+        </div>
+
+        {/* Textarea */}
+        <textarea
+          placeholder='Input your message here...'
+          required
+          minLength={10}
+          rows={6}
+          className='w-full rounded-lg border border-gray-300 px-4 pt-3 text-sm text-black shadow-inner'
+        />
+
         {/* Service Options & Price at the Top */}
         <div className='space-y-4'>
           <p className='text-sm font-semibold text-black'>I'm interested in...</p>
@@ -127,26 +147,6 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
             All services do not include taxes plus mileage.
           </p>
         </div>
-
-        {/* Input Fields */}
-        <div className='space-y-4'>
-          {formFieldOpts.map((field, index) => (
-            <input
-              key={index}
-              {...field}
-              className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
-            />
-          ))}
-        </div>
-
-        {/* Textarea */}
-        <textarea
-          placeholder='Input your message here...'
-          required
-          minLength={10}
-          rows={6}
-          className='w-full rounded-lg border border-gray-300 px-4 pt-3 text-sm text-black shadow-inner'
-        />
 
         {/* Submit Button */}
         <button

@@ -9,7 +9,8 @@ import { IoIosPhonePortrait } from 'react-icons/io';
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
-import { FWTSocialIconV2, IconNameType } from '../../../../components';
+import { thumbsupTextLogoCombo } from '../../../../assets';
+import { FWTImage, FWTSocialIconV2, IconNameType } from '../../../../components';
 import { ContactForm, FormFieldOptions } from './ContactForm.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
@@ -35,22 +36,51 @@ export const HeroFormSection: FunctionComponent = () => {
   const FORM_FIELDS: Array<FormFieldOptions> = [
     {
       type: 'text',
-      placeholder: 'Name',
+      placeholder: 'Full Name',
       required: true,
       minLength: 2,
+      autoComplete: 'name',
     },
     {
       type: 'tel',
-      placeholder: 'Phone',
+      placeholder: 'Phone Number',
       required: true,
-      pattern: '[0-9+]+',
-      title: 'Please enter only numbers and + symbol',
+      pattern: '[0-9]{3}-[0-9]{3}-[0-9]{4}',
+      title: 'Format: 123-456-7890',
+      autoComplete: 'tel',
     },
     {
       type: 'text',
-      placeholder: 'Address',
+      placeholder: 'Current Location (Address)',
       required: true,
-      autoComplete: 'address-line1',
+      autoComplete: 'street-address',
+    },
+    {
+      type: 'text',
+      placeholder: 'Vehicle Year',
+      required: true,
+      pattern: '[0-9]{4}',
+      title: 'Enter 4-digit year',
+    },
+    {
+      type: 'text',
+      placeholder: 'Vehicle Make',
+      required: true,
+    },
+    {
+      type: 'text',
+      placeholder: 'Vehicle Model',
+      required: true,
+    },
+    {
+      type: 'text',
+      placeholder: 'Vehicle Color',
+      required: true,
+    },
+    {
+      type: 'text',
+      placeholder: 'License Plate Number',
+      required: true,
     },
   ];
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -68,19 +98,20 @@ export const HeroFormSection: FunctionComponent = () => {
           ),
         )}
       >
-        <div className='grid items-center gap-14 p-4 font-[sans-serif] sm:p-8 lg:grid-cols-2'>
+        <div className='grid h-full items-start gap-14 p-4 font-[sans-serif] sm:p-8 lg:grid-cols-2'>
           {/* LEFT SIDE OF THE FORM SECTION ∞∞∞ */}
-          <div className='space-y-16'>
-            {/* New Heading */}
-            <h1 className='text-4xl font-bold tracking-wider text-reggie-orange tablet:text-5xl desktop:text-6xl'>
-              Thumbs Up
-              <span className='block text-2xl font-medium tracking-wide text-white tablet:text-3xl desktop:text-4xl'>
-                Roadside Assistance
-              </span>
-            </h1>
+          <div className='space-y-8'>
+            {/* New Heading LOGO IMAGE */}
+            <div className='flex justify-start'>
+              <FWTImage
+                src={thumbsupTextLogoCombo}
+                alt='Thumbs Up Roadside Assistance'
+                className='h-[21rem] w-auto tablet:h-32 desktop:h-[24rem]'
+              />
+            </div>
 
             {/* Subheading */}
-            <h3 className='mt-4 text-base font-semibold text-white tablet:text-lg desktop:text-xl'>
+            <h3 className='text-base font-semibold text-white tablet:text-lg desktop:text-xl'>
               Are you Safe & Out of Danger
             </h3>
 
