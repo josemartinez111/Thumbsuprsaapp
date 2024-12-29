@@ -11,6 +11,7 @@ import { RiTwitterXFill } from 'react-icons/ri';
 import { TbBrandTiktok } from 'react-icons/tb';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
+import { Show } from '../../components';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 // Define a type alias for the icon component
@@ -66,69 +67,39 @@ const IconMap: Record<IconNameType, IconComponentType> = {
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 /**
- * Renders a responsive social icons component with optional links.
+ * Social icon component with optional link functionality.
  *
- * This component displays a set of social media icons that dynamically adjust
- * their size and layout based on the viewport (mobile, tablet, and desktop).
- * - On **tablet** and larger screens: the icons are visible in a horizontal row.
- * - On **mobile**: the icons are hidden.
- *
- * @remarks
- * - The `socialIconsOpts` array specifies which icons to display and their
- *   optional link URLs. Each entry should be an object with the following
- *   properties:
- *     - `icon`: (string) A valid `IconName` as defined in the type exported
- *       from the icon utilities.
- *     - `href` (optional string): The URL for the social media link.
- *       Defaults to "#" if not provided.
- *
- * - The `SocialIcons` component automatically handles consistent styling, so no
- *   additional options or overrides are needed for individual icons.
+ * @param iconName - Icon to render from IconNameType
+ * @param href - Optional URL for social media link (defaults to '#')
+ * @param className - Optional CSS classes
  *
  * @example
  * ```tsx
- * // Interface for SocialIconOptions with optional href
- * interface SocialIconOptions {
- *   icon: IconNameType;
- *   href?: string;
- * }
+ * // Basic usage
+ * <FWTSocialIconV2
+ *   iconName="facebook"
+ *   href="https://facebook.com"
+ *   className="h-5 w-5"
+ * />
  *
- * // Usage with the interface
- * const socialIconsOpts: Array<SocialIconOptions> = [
- *   { icon: 'youtube', href: '[invalid URL removed]' },
- *   { icon: 'facebook', href: '[https://www.facebook.com/yourpage](https://www.facebook.com/yourpage)' },
- *   { icon: 'instagram', href: '[invalid URL removed]' },
- *   { icon: 'tiktok', href: '[https://www.tiktok.com/@yourusername](https://www.tiktok.com/@yourusername)' },
- *   { icon: 'threads', href: '[invalid URL removed]' },
+ * // Multiple icons
+ * const socialLinks = [
+ *   { icon: 'youtube', href: 'https://youtube.com' },
+ *   { icon: 'facebook', href: 'https://facebook.com' },
+ *   { icon: 'instagram', href: 'https://instagram.com' }
  * ];
  *
- * <div
- *   className={twMerge(
- *     clsx(
- *       'hidden items-center gap-2 pl-16 text-black tablet:flex',
- *       'tablet:gap-6 desktop:gap-8',
- *     ),
- *   )}
- * >
- *   {socialIconsOpts.map((iconObj) => (
- *     <SocialIcons
- *       key={iconObj.icon}
- *       iconName={iconObj.icon}
- *       href={iconObj.href} // Pass href from the object
- *       className={twMerge(
- *         clsx(
- *           'w-3 text-black',
- *           'tablet:h-6 tablet:w-6 desktop:w-6',
- *           'dark:text-snow-white',
- *         ),
- *       )}
+ * <div className="flex gap-4">
+ *   {socialLinks.map(({icon, href}) => (
+ *     <FWTSocialIconV2
+ *       key={icon}
+ *       iconName={icon}
+ *       href={href}
+ *       className="h-6 w-6"
  *     />
  *   ))}
  * </div>
  * ```
- *
- * @types
- * - `IconName`: Defines all valid icon names for the `SocialIcons` component.
  */
 export const FWTSocialIconV2: FunctionComponent<SocialIconsProps> = ({
   iconName,
@@ -147,14 +118,24 @@ export const FWTSocialIconV2: FunctionComponent<SocialIconsProps> = ({
   return (
     <Fragment>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
-      <a
-        className={twMerge(clsx('cursor-pointer', className))}
-        href={href}
-        target='_blank' // Add target="_blank" for new tab
-        rel='noopener noreferrer' // Add rel for security best practices
-      >
-        <IconComponent className={twMerge(clsx('h-3 w-3', className))} />
-      </a>
+      <Show
+        condition={href?.startsWith('http')}
+        then={
+          <a
+            className={twMerge(clsx('cursor-pointer', className))}
+            href={href}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <IconComponent className={twMerge(clsx('h-3 w-3', className))} />
+          </a>
+        }
+        otherwise={
+          <a className={twMerge(clsx('cursor-pointer', className))} href={href}>
+            <IconComponent className={twMerge(clsx('h-3 w-3', className))} />
+          </a>
+        }
+      />
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
     </Fragment>
   );
