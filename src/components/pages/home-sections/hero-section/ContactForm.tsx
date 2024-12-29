@@ -29,7 +29,7 @@ type ContactFormProps = {
 // Atoms for state management
 const selectedServicesAtom = atom<string[]>([]);
 
-const totalPriceAtom = atom<number>((get) => {
+const totalPriceAtom = atom<string>((get) => {
   const selectedServices = get(selectedServicesAtom);
   const priceMap: Record<string, number> = {
     'Fix a flat tire': 50,
@@ -38,8 +38,26 @@ const totalPriceAtom = atom<number>((get) => {
     Lockout: 60,
     'Diesel Fuel Delivery': 100,
   };
-  return selectedServices.reduce((total, service) => total + (priceMap[service] || 0), 0);
+
+  const total = selectedServices.reduce(
+    (total, service) => total + (priceMap[service] || 0),
+    0,
+  );
+
+  // Format the total as currency
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+  }).format(total);
 });
+
+type ServicesOptions =
+  | 'Fix a flat tire'
+  | 'Fill gas tank'
+  | 'Jump start'
+  | 'Lockout'
+  | 'Diesel Fuel Delivery';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts }) => {
@@ -47,7 +65,7 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   const [selectedServices, setSelectedServices] = useAtom(selectedServicesAtom);
   const [totalPrice] = useAtom(totalPriceAtom);
 
-  const services = [
+  const services: Array<ServicesOptions> = [
     'Fix a flat tire',
     'Fill gas tank',
     'Jump start',
@@ -60,7 +78,7 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
     setSelectedServices(
       (prevServices) =>
         prevServices.includes(service)
-          ? prevServices.filter((s) => s !== service) // Deselect service
+          ? prevServices.filter((s: string) => s !== service) // Deselect service
           : [...prevServices, service], // Select service
     );
   };
@@ -73,18 +91,17 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
         <div className='space-y-4'>
           <p className='text-sm font-semibold text-black'>I'm interested in...</p>
           <div className='space-y-2'>
-            {services.map((service) => (
+            {services.map((service: ServicesOptions) => (
               <button
                 key={service}
                 type='button'
                 onClick={() => handleServiceToggle(service)}
                 className={twMerge(
                   clsx(
-                    'w-full rounded-lg border px-4 py-2 text-sm font-semibold',
-                    'border-gray-300 hover:bg-reggie-orange hover:text-white',
+                    'w-full rounded-lg border px-4 py-2 text-sm font-semibold transition-all duration-200',
                     selectedServices.includes(service)
-                      ? 'bg-reggie-orange text-white' // Selected State
-                      : 'bg-gray-200 text-black', // Unselected State
+                      ? 'border-reggie-orange bg-reggie-orange text-white' // Selected State
+                      : 'border-gray-300 bg-gray-200 text-black hover:bg-gray-300 hover:text-black', // Unselected State
                   ),
                 )}
               >
@@ -92,12 +109,13 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
               </button>
             ))}
           </div>
+
           {/* Dynamic Price */}
           <div className='mt-2 text-center text-lg font-bold'>
-            {totalPrice > 0 ? (
+            {totalPrice !== '$0.00' ? (
               <p>
                 <span className='text-black'>Total Estimated Price: </span>
-                <span className='text-reggie-orange'>${totalPrice}</span>
+                <span className='text-reggie-orange'>{totalPrice}</span>
               </p>
             ) : (
               <p className='text-gray-600'>Select one or more services to see the price.</p>
