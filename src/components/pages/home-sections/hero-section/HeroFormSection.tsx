@@ -14,7 +14,7 @@ import clsx from 'clsx';
 import { FWTSocialIconV2, IconNameType } from '../../../utils/FWTSocialIconV2.tsx';
 import { Show } from '../../../utils/Show.tsx';
 import { FormFieldOptions } from './ContactForm.tsx';
-import { ServiceOfferPickers } from './ServiceOfferPickers.tsx';
+import { ServiceOfferPickersButtons } from './ServiceOfferPickersButtons.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 type CustomIconType = {
@@ -68,7 +68,7 @@ export const HeroFormSection: FunctionComponent = () => {
     },
     {
       type: 'text',
-      placeholder: 'Enter your address',
+      placeholder: 'Address',
       required: true,
       autoComplete: 'address-line1',
     },
@@ -170,7 +170,7 @@ export const HeroFormSection: FunctionComponent = () => {
           </div>
 
           {/* RIGHT SIDE OF THE FORM SECTION ∞∞∞ */}
-          <ServiceOfferPickers
+          <ServiceOfferPickersButtons
             formFieldOpts={FORM_FIELDS}
             formCallback={(field: FormFieldOptions, index: number) => (
               <input

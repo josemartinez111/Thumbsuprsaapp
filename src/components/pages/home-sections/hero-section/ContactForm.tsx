@@ -40,7 +40,7 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({
         {formFieldOpts.map(formCallback)}
         {/* TEXTAREA MESSAGE FIELD ∞∞∞ */}
         <textarea
-          placeholder='Message'
+          placeholder='Input your message here.. (Stretch text area on desktop & laptop screens)'
           required
           minLength={10}
           rows={6}
