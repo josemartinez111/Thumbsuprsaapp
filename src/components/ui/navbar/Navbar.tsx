@@ -26,7 +26,7 @@ export const Navbar: FunctionComponent = () => {
   // Use the IconName type directly for the array
   const socialIconsOpts: Array<SocialIconOptions> = [
     { icon: 'facebook', href: '#' },
-    { icon: 'instagram', href: '#' },
+    { icon: 'instagram', href: 'https://www.instagram.com/thumbsuproadsideassistance/?hl=en' },
     { icon: 'threads', href: '#' },
   ];
 
