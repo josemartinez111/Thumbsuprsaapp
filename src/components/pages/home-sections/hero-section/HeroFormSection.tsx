@@ -106,13 +106,13 @@ export const HeroFormSection: FunctionComponent = () => {
               <FWTImage
                 src={thumbsupTextLogoCombo}
                 alt='Thumbs Up Roadside Assistance'
-                className='h-[21rem] w-auto tablet:h-32 desktop:h-[24rem]'
+                className='h-[21rem] w-auto tablet:h-[27rem] desktop:h-[24rem]'
               />
             </div>
 
             {/* Subheading */}
             <h3 className='text-base font-semibold text-white tablet:text-lg desktop:text-xl'>
-              Are you Safe & Out of Danger
+              Are you Safe & Out of Danger?
             </h3>
 
             {/* Supporting Text */}
