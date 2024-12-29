@@ -13,8 +13,7 @@ import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import { FWTSocialIconV2, IconNameType } from '../../../utils/FWTSocialIconV2.tsx';
 import { Show } from '../../../utils/Show.tsx';
-import { FormFieldOptions } from './ContactForm.tsx';
-import { ServiceOfferPickersButtons } from './ServiceOfferPickersButtons.tsx';
+import { ContactForm, FormFieldOptions } from './ContactForm.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 type CustomIconType = {
@@ -90,11 +89,24 @@ export const HeroFormSection: FunctionComponent = () => {
       >
         <div className='grid items-center gap-14 p-4 font-[sans-serif] sm:p-8 lg:grid-cols-2'>
           {/* LEFT SIDE OF THE FORM SECTION ∞∞∞ */}
-          <div>
-            <h1 className='text-4xl font-bold text-white'>Are you Safe & Out of Danger</h1>
-            <p className='mt-4 text-sm leading-relaxed text-gray-300'>
+          <div className='space-y-16'>
+            {/* New Heading */}
+            <h1 className='text-4xl font-bold tracking-wider text-reggie-orange tablet:text-5xl desktop:text-6xl'>
+              Thumbs Up
+              <span className='block text-2xl font-medium tracking-wide text-white tablet:text-3xl desktop:text-4xl'>
+                Roadside Assistance
+              </span>
+            </h1>
+
+            {/* Subheading */}
+            <h3 className='mt-4 text-base font-semibold text-white tablet:text-lg desktop:text-xl'>
+              Are you Safe & Out of Danger
+            </h3>
+
+            {/* Supporting Text */}
+            <p className='mt-2 text-sm font-semibold leading-relaxed text-gray-300 tablet:text-base desktop:text-lg'>
               Stuck and need help? Provide us with a little information and one of our Service
-              Technicians will be right out to help
+              Technicians will be right out to help.
             </p>
 
             {/* Business contact info left side ∞∞∞ */}
@@ -102,7 +114,10 @@ export const HeroFormSection: FunctionComponent = () => {
               {/* EMAIL INFO LEFT SIDE ∞∞∞ */}
               <li className='flex items-center'>
                 <MdOutlineMailOutline />
-                <a href='mailto:thumbsuprsa@gmail.com' className='ml-4 text-sm text-white'>
+                <a
+                  href='mailto:thumbsuprsa@gmail.com'
+                  className='ml-4 text-sm font-semibold text-white tablet:text-base desktop:text-lg'
+                >
                   thumbsuprsa@gmail.com
                 </a>
               </li>
@@ -110,7 +125,10 @@ export const HeroFormSection: FunctionComponent = () => {
               {/* PHONE INFO LEFT SIDE ∞∞∞ */}
               <li className='flex items-center'>
                 <IoIosPhonePortrait />
-                <a href='tel:+19787733995' className='ml-4 text-sm text-white'>
+                <a
+                  href='tel:+19787733995'
+                  className='ml-4 text-sm font-semibold text-white tablet:text-base desktop:text-lg'
+                >
                   978-773-3995
                 </a>
               </li>
@@ -118,15 +136,11 @@ export const HeroFormSection: FunctionComponent = () => {
               {/* LOCATION INFO LEFT SIDE ∞∞∞ */}
               <li className='flex items-center'>
                 <GrLocation />
-                {/* 
-                 TODO: For an address link, you can use Google Maps with an encoded URL.
-                 Here's how to make it open Google Maps with that location: 
-                 */}
                 <a
                   href='https://www.google.com/maps/search/?api=1&query=Lawrence+MA+01843'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='ml-4 text-sm text-white'
+                  className='ml-4 text-sm font-semibold text-white tablet:text-base desktop:text-lg'
                 >
                   Lawrence MA 01843
                 </a>
@@ -137,7 +151,7 @@ export const HeroFormSection: FunctionComponent = () => {
             <ul className='mt-12 flex cursor-pointer space-x-4'>
               {SOCIAL_ICONS.map((social: CustomIconType | ReactIconType) => (
                 <li
-                  key={social.href} // Using href since it's common to both types
+                  key={social.href}
                   className={twMerge(
                     clsx(
                       'flex h-10 w-10 shrink-0 items-center',
@@ -169,17 +183,8 @@ export const HeroFormSection: FunctionComponent = () => {
             </ul>
           </div>
 
-          {/* RIGHT SIDE OF THE FORM SECTION ∞∞∞ */}
-          <ServiceOfferPickersButtons
-            formFieldOpts={FORM_FIELDS}
-            formCallback={(field: FormFieldOptions, index: number) => (
-              <input
-                key={index}
-                {...field}
-                className='w-full rounded-lg px-4 py-3 text-sm text-gray-800'
-              />
-            )}
-          />
+          {/* Right Side - Contact Form */}
+          <ContactForm formFieldOpts={FORM_FIELDS} />
         </div>
       </div>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}

@@ -105,11 +105,24 @@ export const Footer: FunctionComponent = () => {
           </div>
 
           {/* Copyright Section */}
-          <div className='mt-8 flex items-center space-x-2 dark:text-snow-white'>
-            <FaRegCopyright className='text-gray-800 dark:text-snow-white' />
-            <p className='text-xs font-semibold text-gray-800 dark:text-snow-white'>
-              FantumWave Tech 2024. All rights reserved.
-            </p>
+          <div className='mt-8 flex flex-col items-center space-y-2 dark:text-snow-white'>
+            {/* COPYRIGHT INFORMATION */}
+            <div className='flex items-center space-x-2'>
+              {/* COPYRIGHT ICON */}
+              <FaRegCopyright className='text-gray-800 dark:text-snow-white' />
+              <p className='text-xs font-semibold text-gray-800 dark:text-snow-white'>
+                Thumbs Up RSA 2024. All rights reserved.
+              </p>
+            </div>
+
+            {/* CREATED BY SECTION */}
+            <div>
+              <a href='https://www.fantumwave.tech' target='_blank' rel='noopener noreferrer'>
+                <p className='text-xs font-semibold text-gray-800 dark:text-snow-white'>
+                  Created By: FantumWave Tech 2024.
+                </p>
+              </a>
+            </div>
           </div>
         </div>
       </footer>
