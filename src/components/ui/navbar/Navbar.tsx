@@ -89,69 +89,73 @@ export const Navbar: FunctionComponent = () => {
           </div>
           {/* END OF LOGO ∞∞∞ */}
 
-          {/* PHONE NUMBER ∞∞∞ */}
-          <div
-            className={twMerge(
-              clsx(
-                'hidden',
-                'tablet:flex tablet:items-center tablet:gap-2',
-                'tablet:ml-8 tablet:mr-8',
-                'text-black dark:text-snow-white',
-                'transition-colors duration-200',
-              ),
-            )}
-          >
-            <a
-              href='tel:+19787733995'
+          {/* Right Side Group ∞∞∞ */}
+          <div className='flex items-center gap-4 tablet:gap-6'>
+            {/* PHONE NUMBER ∞∞∞ */}
+            <div
               className={twMerge(
                 clsx(
-                  'group flex items-center gap-2',
-                  'rounded-lg border-2',
-                  'border-reggie-orange dark:border-thumbsup-yellow',
-                  'px-3 py-1',
-                  'tablet:gap-3 tablet:px-4 tablet:py-2',
-                  'transition-all duration-300 hover:scale-105',
+                  'inline-flex items-center gap-2', // Tighten layout and reduce gap
+                  'mx-auto max-w-fit', // Ensure container is only as wide as its content
+                  'text-black dark:text-snow-white',
+                  'transition-colors duration-200',
                 ),
               )}
             >
-              <FaPhone
+              <a
+                href='tel:+19787733995'
                 className={twMerge(
                   clsx(
-                    'h-5 w-5 animate-pulse text-reggie-orange',
-                    'group-hover:animate-none dark:text-thumbsup-yellow',
+                    'group inline-flex items-center gap-1', // Reduced gap between icon and text
+                    'rounded-lg border', // Simplified border styling
+                    'border-reggie-orange dark:border-thumbsup-yellow',
+                    'px-1 py-[2px]', // Minimal padding for compact look
+                    'tablet:gap-2 tablet:px-2 tablet:py-[3px]', // Adjust for tablets
+                    'desktop:px-3 desktop:py-[4px]', // Adjust for desktops
+                    'transition-all duration-300 hover:scale-105',
                   ),
                 )}
-              />
-              <div className='flex flex-col items-start'>
-                <span
+              >
+                <FaPhone
                   className={twMerge(
                     clsx(
-                      'font-audiowide text-xs font-bold',
-                      'tracking-wider text-reggie-orange',
-                      'tablet:text-sm dark:text-thumbsup-yellow',
+                      'h-4 w-4 animate-pulse text-reggie-orange', // Smaller icon for mobile
+                      'tablet:h-5 tablet:w-5', // Icon size for tablet
+                      'desktop:h-6 desktop:w-6', // Icon size for desktop
+                      'group-hover:animate-none dark:text-thumbsup-yellow',
                     ),
                   )}
-                >
-                  CALL NOW
-                </span>
-                <span
-                  className={twMerge(
-                    clsx(
-                      'text-base font-medium',
-                      'group-hover:text-reggie-orange',
-                      'tablet:text-lg dark:group-hover:text-thumbsup-yellow',
-                    ),
-                  )}
-                >
-                  978-773-3995
-                </span>
-              </div>
-            </a>
-          </div>
-          {/* END OF PHONE NUMBER ∞∞∞ */}
+                />
+                <div className='flex flex-col items-start'>
+                  <span
+                    className={twMerge(
+                      clsx(
+                        'font-audiowide text-[8px] font-bold', // Very small font for "CALL NOW"
+                        'tracking-wide text-reggie-orange',
+                        'tablet:text-[9px] dark:text-thumbsup-yellow', // Slightly larger for tablets
+                        'desktop:text-[10px]', // Slightly larger for desktops
+                      ),
+                    )}
+                  >
+                    CALL NOW
+                  </span>
+                  <span
+                    className={twMerge(
+                      clsx(
+                        'text-[9px] font-medium', // Very small font for phone number
+                        'group-hover:text-reggie-orange',
+                        'tablet:text-[10px] dark:group-hover:text-thumbsup-yellow', // Slightly larger for tablets
+                        'desktop:text-sm', // Larger font for desktops
+                      ),
+                    )}
+                  >
+                    978-773-3995
+                  </span>
+                </div>
+              </a>
+            </div>
+            {/* END OF PHONE NUMBER ∞∞∞ */}
 
-          {/* Right Side Group ∞∞∞ */}
-          <div className='flex items-center gap-4 tablet:gap-6'>
             {/* Toggle Darkmode Icons ∞∞∞ */}
             <div className='relative flex items-center'>
               <ToggleDarkmodeIcons
@@ -159,7 +163,7 @@ export const Navbar: FunctionComponent = () => {
                 condition={isDarkMode}
                 className={twMerge(
                   clsx(
-                    'mr-11 w-10 desktop:w-10',
+                    'mr-8 w-10 desktop:w-10',
                     'tablet:h-10 tablet:w-10',
                     'transition-transform duration-200',
                     'hover:scale-110',

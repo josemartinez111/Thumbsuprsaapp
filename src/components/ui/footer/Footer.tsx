@@ -5,9 +5,9 @@
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 import { FunctionComponent, Fragment } from 'react';
 import { IconType } from 'react-icons';
-import { BsThreadsFill, BsTwitterX } from 'react-icons/bs';
-import { FaGithub, FaRegCopyright } from 'react-icons/fa';
-import { LuInstagram } from 'react-icons/lu';
+import { BsThreadsFill } from 'react-icons/bs';
+import { FaRegCopyright } from 'react-icons/fa';
+import { LuFacebook, LuInstagram } from 'react-icons/lu';
 import { useDarkModeStore } from '../../../lib';
 import { ToggleFWTLogo } from '../../../components';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -22,10 +22,13 @@ export type SocialMediaOptions = {
 export const Footer: FunctionComponent = () => {
   // ⚫️ Social Media Links
   const SOCIAL_MEDIA: Array<SocialMediaOptions> = [
-    { href: '#', icon: LuInstagram, label: 'Instagram' },
+    { href: '#', icon: LuFacebook, label: 'Facebook' },
+    {
+      href: 'https://www.instagram.com/thumbsuproadsideassistance/?hl=en',
+      icon: LuInstagram,
+      label: 'Instagram',
+    },
     { href: '#', icon: BsThreadsFill, label: 'Threads' },
-    { href: '#', icon: FaGithub, label: 'GitHub' },
-    { href: '#', icon: BsTwitterX, label: 'X' },
   ];
 
   // ⚫️ Navigation Links
@@ -59,7 +62,7 @@ export const Footer: FunctionComponent = () => {
   return (
     <Fragment>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
-      <footer className='bg-gray-100 dark:bg-black dark:text-snow-white'>
+      <footer className='relative z-10 bg-gray-100 dark:bg-black dark:text-snow-white'>
         <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
           <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
             {/* Logo and Socials */}
