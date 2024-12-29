@@ -36,7 +36,7 @@ type SocialIconsProps = {
 
 // Define a type for the available icons.
 // Add new icon names to the type as needed.
-type IconNameType =
+export type IconNameType =
   | 'twitter'
   | 'youtube'
   | 'facebook'

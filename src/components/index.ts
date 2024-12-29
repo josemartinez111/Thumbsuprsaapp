@@ -6,7 +6,8 @@
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // page-sections components->router
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-// export * from './page-sections/home-page-sections/HomeHeroSection';
+export * from './pages/home-sections/hero-section/HeroFormSection';
+export * from './pages/home-sections/accordion-info-section/ThumbsupAccordionInfoSection';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // utils components->router
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -51,6 +52,7 @@ export * from './utils/ToggleFWTLogo';
 export * from './utils/FallbackComponent';
 export * from './utils/AnimateSection';
 export * from './utils/FWTSocialIconV2';
+export type { IconNameType } from './utils/FWTSocialIconV2';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // pages components->route
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
