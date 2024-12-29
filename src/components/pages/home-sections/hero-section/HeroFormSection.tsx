@@ -12,7 +12,6 @@ import { MdOutlineMailOutline } from 'react-icons/md';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import { FWTSocialIconV2, IconNameType } from '../../../utils/FWTSocialIconV2.tsx';
-import { Show } from '../../../utils/Show.tsx';
 import { ContactForm, FormFieldOptions } from './ContactForm.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
@@ -149,34 +148,30 @@ export const HeroFormSection: FunctionComponent = () => {
 
             {/* Social media icons left side ∞∞∞ */}
             <ul className='mt-12 flex cursor-pointer space-x-4'>
-              {SOCIAL_ICONS.map((social: CustomIconType | ReactIconType) => (
+              {SOCIAL_ICONS.map((social, index) => (
                 <li
-                  key={social.href}
+                  key={index} // Using a simple index for keys since SOCIAL_ICONS is static
                   className={twMerge(
                     clsx(
-                      'flex h-10 w-10 shrink-0 items-center',
-                      'justify-center rounded-full bg-reggie-orange',
-                      'hover:bg-thumbsup-yellow',
+                      'relative flex h-10 w-10 shrink-0 items-center justify-center', // Ensure proper alignment
+                      'rounded-full bg-reggie-orange hover:bg-thumbsup-yellow', // Background color on hover
+                      'focus-within:ring-2 focus-within:ring-thumbsup-yellow', // Accessibility focus styling
                     ),
                   )}
                 >
-                  <a href={social.href}>
-                    <Show
-                      condition={social.type === 'custom'}
-                      then={
-                        social.type === 'custom' && (
-                          <FWTSocialIconV2
-                            iconName={social.name}
-                            className='h-5 w-5 text-white'
-                          />
-                        )
-                      }
-                      otherwise={
-                        social.type === 'react' && (
-                          <social.Icon className='h-5 w-5 text-white' />
-                        )
-                      }
-                    />
+                  {/* Ensure the anchor tag is clickable */}
+                  <a
+                    href={social.href}
+                    className={clsx(
+                      'absolute inset-0 flex items-center justify-center', // Ensure the entire <li> is clickable
+                      'z-10 text-white', // Icon styles
+                    )}
+                  >
+                    {social.type === 'custom' ? (
+                      <FWTSocialIconV2 iconName={social.name} className='h-5 w-5' />
+                    ) : (
+                      <social.Icon className='h-5 w-5' />
+                    )}
                   </a>
                 </li>
               ))}
