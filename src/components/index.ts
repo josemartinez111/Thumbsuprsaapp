@@ -30,7 +30,7 @@ export * from './ui/effects/GradientText';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // metadata components->router
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-// export * from './metadata/HomePageMetadata';
+export * from './metadata/HomePageMetadata';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 // pages-components->router
