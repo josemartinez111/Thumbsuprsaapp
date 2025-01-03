@@ -4,14 +4,16 @@
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 //                       IMPORTS
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-import { FunctionComponent, Fragment } from 'react';
+import { FunctionComponent, Fragment, FormEvent } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
+import { handleSubmitAction } from '../../../../apis';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export type FormFieldOptions = {
+  name: string;
   type: string;
   placeholder: string;
   required: boolean;
@@ -35,9 +37,10 @@ type ServicesOptions =
 
 // Atoms for state management
 const selectedServicesAtom = atom<string[]>([]);
+const formStatusAtom = atom<string | null>(null);
 
 const totalPriceAtom = atom<string>((get) => {
-  const selectedServices = get(selectedServicesAtom) as ServicesOptions[]; // Ensure selectedServices is typed as ServicesOptions[]
+  const selectedServices = get(selectedServicesAtom) as ServicesOptions[];
   const priceMap: Record<ServicesOptions, number> = {
     'Tire change': 85,
     'Gas fuel delivery': 45,
@@ -66,6 +69,7 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   const [selectedServices, setSelectedServices] = useAtom(selectedServicesAtom);
   const [totalPrice] = useAtom(totalPriceAtom);
+  const [formStatus, setFormStatus] = useAtom(formStatusAtom);
 
   const services: Array<ServicesOptions> = [
     'Tire change',
@@ -74,34 +78,61 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
     'Lockout',
     'Diesel Fuel Delivery',
   ];
-  // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
   const handleServiceToggle = (service: string) => {
     setSelectedServices(
       (prevServices) =>
         prevServices.includes(service)
-          ? prevServices.filter((s: string) => s !== service) // Deselect service
+          ? prevServices.filter((s) => s !== service) // Deselect service
           : [...prevServices, service], // Select service
     );
+  };
+
+  const sendForm = (formEl: FormEvent<HTMLFormElement>) => {
+    return handleSubmitAction(formEl, selectedServices, totalPrice, setFormStatus);
   };
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   return (
     <Fragment>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
-      <form className='mt-8 cursor-pointer space-y-6 rounded-lg bg-white p-6 shadow-md'>
+      <form
+        onSubmit={sendForm}
+        className='mt-8 cursor-pointer space-y-6 rounded-lg bg-white p-6 shadow-md'
+      >
         {/* Input Fields */}
-        <div className='space-y-4'>
-          {formFieldOpts.map((field, index) => (
+        {formFieldOpts.map((field, index) => {
+          if (field.name === 'phoneNumber') {
+            return (
+              <input
+                key={index}
+                {...field} // Spread all properties
+                className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
+                onChange={(event) => {
+                  let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                  if (value.length > 3 && value.length <= 6) {
+                    value = `${value.slice(0, 3)}-${value.slice(3)}`; // Format as "000-000"
+                  } else if (value.length > 6) {
+                    value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`; // Format as "000-000-0000"
+                  }
+                  event.target.value = value; // Update the input value
+                }}
+              />
+            );
+          }
+
+          // Default case for other fields
+          return (
             <input
               key={index}
-              {...field}
+              {...field} // Spread all properties
               className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
             />
-          ))}
-        </div>
+          );
+        })}
 
         {/* Textarea */}
         <textarea
+          name='message'
           placeholder='Input your message here...'
           required
           minLength={10}
@@ -162,6 +193,16 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
           <FaRegPaperPlane className='mr-2 w-6 font-semibold' />
           Send Message
         </button>
+
+        {/* Submission Status */}
+        {formStatus === 'success' && (
+          <p className='text-center text-green-500'>
+            Your request has been sent successfully!
+          </p>
+        )}
+        {formStatus === 'error' && (
+          <p className='text-center text-red-500'>Something went wrong. Please try again.</p>
+        )}
       </form>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
     </Fragment>

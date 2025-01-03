@@ -21,10 +21,10 @@ export * from './global-composables-hooks/fantumwave-hooks/FantumWave';
 
 // Directly exporting individual static hooks
 export {
-	useOnMounted,
-	useOnUnmounted,
-	useOnUpdated,
-	useComputed,
+  useOnMounted,
+  useOnUnmounted,
+  useOnUpdated,
+  useComputed,
 } from './global-composables-hooks/fantumwave-hooks/FantumWave';
 
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -42,5 +42,5 @@ export { Constants as EL } from './constants/constants';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // constants->route
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-export { HTTP_STATUS as ST } from './utils/status-codes';
+export { HTTP_STATUS as STLIB } from './utils/status-codes';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
