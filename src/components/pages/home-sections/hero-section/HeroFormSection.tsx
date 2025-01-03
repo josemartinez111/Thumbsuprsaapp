@@ -35,6 +35,7 @@ export const HeroFormSection: FunctionComponent = () => {
 
   const FORM_FIELDS: Array<FormFieldOptions> = [
     {
+      name: 'fullName',
       type: 'text',
       placeholder: 'Full Name',
       required: true,
@@ -42,6 +43,7 @@ export const HeroFormSection: FunctionComponent = () => {
       autoComplete: 'name',
     },
     {
+      name: 'phoneNumber',
       type: 'tel',
       placeholder: 'Phone Number',
       required: true,
@@ -50,34 +52,25 @@ export const HeroFormSection: FunctionComponent = () => {
       autoComplete: 'tel',
     },
     {
+      name: 'currentLocation',
       type: 'text',
       placeholder: 'Current Location (Address)',
       required: true,
       autoComplete: 'street-address',
     },
     {
+      name: 'vehicleYear',
       type: 'text',
       placeholder: 'Vehicle Year',
       required: true,
       pattern: '[0-9]{4}',
       title: 'Enter 4-digit year',
     },
+    { name: 'vehicleMake', type: 'text', placeholder: 'Vehicle Make', required: true },
+    { name: 'vehicleModel', type: 'text', placeholder: 'Vehicle Model', required: true },
+    { name: 'vehicleColor', type: 'text', placeholder: 'Vehicle Color', required: true },
     {
-      type: 'text',
-      placeholder: 'Vehicle Make',
-      required: true,
-    },
-    {
-      type: 'text',
-      placeholder: 'Vehicle Model',
-      required: true,
-    },
-    {
-      type: 'text',
-      placeholder: 'Vehicle Color',
-      required: true,
-    },
-    {
+      name: 'licensePlateNumber',
       type: 'text',
       placeholder: 'License Plate Number',
       required: true,

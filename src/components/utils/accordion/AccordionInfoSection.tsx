@@ -43,7 +43,7 @@ export const AccordionInfoSection: FunctionComponent = () => {
         'Emergency roadside assistance services, such as light duty services provided by the Towing industry.',
     },
     {
-      question: 'Can I cancel my subscription anytime?',
+      question: 'Can I cancel my service anytime?',
       answer:
         'Yes! All services are able to be cancelled with a \n' +
         'applicable 75% fee due upon cancellation.',
