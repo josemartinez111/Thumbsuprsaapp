@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "run:dev": "vite",
-    "run:build": "tsc -b && vite build",
+    "build:proj": "tsc -b && vite build",
     "clean": "rm -rf dist node_modules/.vite && pnpm install",
     "run:preview": "vite preview"
   },
