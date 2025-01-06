@@ -4,7 +4,7 @@
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 //                       IMPORTS
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-import { FunctionComponent, Fragment, FormEvent } from 'react';
+import { FunctionComponent, Fragment, FormEvent, ChangeEvent } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
@@ -49,7 +49,7 @@ const totalPriceAtom = atom<string>((get) => {
     'Diesel Fuel Delivery': 70,
   };
 
-  const total = selectedServices.reduce((total, service) => {
+  const total = selectedServices.reduce((total: number, service: ServicesOptions) => {
     // Ensure the service is a valid key of ServicesOptions
     return total + (priceMap[service] || 0);
   }, 0);
@@ -100,14 +100,14 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
         className='mt-8 cursor-pointer space-y-6 rounded-lg bg-white p-6 shadow-md'
       >
         {/* Input Fields */}
-        {formFieldOpts.map((field, index) => {
+        {formFieldOpts.map((field: FormFieldOptions, index) => {
           if (field.name === 'phoneNumber') {
             return (
               <input
                 key={index}
                 {...field} // Spread all properties
                 className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
-                onChange={(event) => {
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
                   let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
                   if (value.length > 3 && value.length <= 6) {
                     value = `${value.slice(0, 3)}-${value.slice(3)}`; // Format as "000-000"
