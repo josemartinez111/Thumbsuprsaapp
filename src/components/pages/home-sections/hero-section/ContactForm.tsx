@@ -27,31 +27,51 @@ type ContactFormProps = {
   formFieldOpts: Array<FormFieldOptions>;
 };
 
-type ServicesOptions =
-  | 'Tire change'
-  | 'Gas fuel delivery'
-  | 'Jump start'
-  | 'Lockout'
-  | 'Diesel Fuel Delivery';
-//⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
+// Define a unified service configuration type
+type ServiceConfig = {
+  displayName: string; // Name displayed to users
+  backendKey: string; // Backend-compatible enum value
+  price: number; // Price for the service
+};
 
-// Atoms for state management
-const selectedServicesAtom = atom<string[]>([]);
-const formStatusAtom = atom<string | null>(null);
+// Define the services as a Record
+const servicesConfig: Record<string, ServiceConfig> = {
+  'Tire change': {
+    displayName: 'Tire change',
+    backendKey: 'TireChange',
+    price: 85,
+  },
+  'Gas fuel delivery': {
+    displayName: 'Gas fuel delivery',
+    backendKey: 'FuelDelivery',
+    price: 45,
+  },
+  'Jump start': {
+    displayName: 'Jump start',
+    backendKey: 'JumpStart',
+    price: 65,
+  },
+  Lockout: {
+    displayName: 'Lockout',
+    backendKey: 'Lockout',
+    price: 65,
+  },
+  'Diesel Fuel Delivery': {
+    displayName: 'Diesel Fuel Delivery',
+    backendKey: 'DieselFuelDelivery',
+    price: 70,
+  },
+};
+
+// Dynamically infer service options from the keys of the servicesConfig
+type ServicesOptions = keyof typeof servicesConfig;
+//⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 const totalPriceAtom = atom<string>((get) => {
   const selectedServices = get(selectedServicesAtom) as ServicesOptions[];
-  const priceMap: Record<ServicesOptions, number> = {
-    'Tire change': 85,
-    'Gas fuel delivery': 45,
-    'Jump start': 65,
-    Lockout: 65,
-    'Diesel Fuel Delivery': 70,
-  };
 
-  const total = selectedServices.reduce((total: number, service: ServicesOptions) => {
-    // Ensure the service is a valid key of ServicesOptions
-    return total + (priceMap[service] || 0);
+  const total = selectedServices.reduce((total, service) => {
+    return total + (servicesConfig[service]?.price || 0);
   }, 0);
 
   // Format the total as currency
@@ -63,6 +83,10 @@ const totalPriceAtom = atom<string>((get) => {
 
   return formattedPriceTotal;
 });
+
+// Atoms for state management
+const selectedServicesAtom = atom<string[]>([]);
+const formStatusAtom = atom<string | null>(null);
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts }) => {
@@ -71,13 +95,9 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   const [totalPrice] = useAtom(totalPriceAtom);
   const [formStatus, setFormStatus] = useAtom(formStatusAtom);
 
-  const services: Array<ServicesOptions> = [
-    'Tire change',
-    'Gas fuel delivery',
-    'Jump start',
-    'Lockout',
-    'Diesel Fuel Delivery',
-  ];
+  // Export services as an array for easy iteration in the UI
+  const services = Object.keys(servicesConfig) as Array<ServicesOptions>;
+  // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
   const handleServiceToggle = (service: string) => {
     setSelectedServices(
@@ -89,7 +109,13 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   };
 
   const sendForm = (formEl: FormEvent<HTMLFormElement>) => {
-    return handleSubmitAction(formEl, selectedServices, totalPrice, setFormStatus);
+    // Map selected services to backend-compatible enum values
+    const mappedServices = selectedServices.map((service: string) => {
+      return servicesConfig[service].backendKey;
+    });
+
+    // Call the action handler with mapped services
+    return handleSubmitAction(formEl, mappedServices, totalPrice, setFormStatus);
   };
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   return (
@@ -143,6 +169,8 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
         {/* Service Options & Price at the Top */}
         <div className='space-y-4'>
           <p className='text-sm font-semibold text-black'>I'm interested in...</p>
+
+          {/* Service Buttons */}
           <div className='space-y-2'>
             {services.map((service: ServicesOptions) => (
               <button

@@ -6,18 +6,21 @@ import { FormEvent } from 'react';
 import { EL, STLIB } from '../lib';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
+/**
+ * The payload format for sending data to the backend.
+ */
 export type ContactFormPayload = {
-  fullName: string;
-  phoneNumber: string;
-  currentLocation: string;
-  vehicleYear: string;
-  vehicleMake: string;
-  vehicleModel: string;
-  vehicleColor: string;
-  licensePlateNumber: string;
-  message: string;
-  services?: Array<string>;
-  total: string;
+  fullName: string; // User's full name
+  phoneNumber: string; // User's phone number
+  currentLocation: string; // Current location of the user
+  vehicleYear: string; // Vehicle's year of manufacture
+  vehicleMake: string; // Vehicle's make
+  vehicleModel: string; // Vehicle's model
+  vehicleColor: string; // Vehicle's color
+  licensePlateNumber: string; // Vehicle's license plate
+  message: string; // Additional message from the user
+  services?: Array<string>; // Selected services (mapped to backend-compatible values)
+  total: string; // Total cost as a string
 };
 
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -55,6 +58,9 @@ export async function handleSubmitAction(
     }),
     message: formData.get('message')?.toString() ?? '',
   };
+
+  // Log for debugging purposes
+  console.log('Payload being sent to the API:', JSON.stringify(payload, null, 2));
   try {
     let success = await submitContactForm(payload);
     setFormStatus(success ? `${STLIB.OK}` : `${STLIB.NOT_FOUND}`);
@@ -76,8 +82,12 @@ const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> 
   const apiURL =
     import.meta.env.MODE === 'development'
       ? import.meta.env.VITE_API_URL_DEV
-      : import.meta.env.VITE_API_URL_PROD;
+      : (process.env.API_URL_PROD ?? EL.STR_EMPTY);
 
+  console.log('Environment mode:', import.meta.env.MODE);
+  console.log('API URL:', apiURL);
+  // Log the payload being sent to the API
+  console.log('Payload being sent to the API:', JSON.stringify(payload, null, 2));
   try {
     const response = await axios.post(apiURL, payload);
 
@@ -86,6 +96,8 @@ const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> 
         '\nForm submitted successfully:',
         JSON.stringify(response.data, null, 2), // Format the `data` part of the response
       );
+
+      console.log('Response status:', response.status);
       return true;
     }
 
