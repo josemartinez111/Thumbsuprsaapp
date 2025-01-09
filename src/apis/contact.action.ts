@@ -79,14 +79,17 @@ export async function handleSubmitAction(
  * @throws {Error} - Re-throws any error that occurs during the API call.
  */
 const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> => {
+  // Environment variables
+  const devKey = import.meta.env.VITE_API_URL_DEV;
+  const prodKey = process.env.API_URL_PROD;
+
   /** TODO: DEVELOPMENT */
-  const apiURL =
-    import.meta.env.MODE === 'development'
-      ? import.meta.env.VITE_API_URL_DEV
-      : process.env.API_URL_PROD;
+  const apiURL = import.meta.env.MODE === 'development' ? devKey : prodKey;
 
   /** TODO: PRODUCTION */
   // const apiURL = process.env.API_URL_PROD ?? EL.STR_EMPTY;
+
+  console.log('Production API URL KEY:', prodKey);
 
   console.log('Environment mode:', import.meta.env.MODE);
   console.log('API URL:', apiURL);
