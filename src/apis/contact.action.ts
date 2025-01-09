@@ -83,7 +83,7 @@ const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> 
   const apiURL =
     import.meta.env.MODE === 'development'
       ? import.meta.env.VITE_API_URL_DEV
-      : (process.env.API_URL_PROD ?? EL.STR_EMPTY);
+      : process.env.API_URL_PROD;
 
   /** TODO: PRODUCTION */
   // const apiURL = process.env.API_URL_PROD ?? EL.STR_EMPTY;
