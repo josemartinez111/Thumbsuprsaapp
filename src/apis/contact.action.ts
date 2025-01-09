@@ -86,8 +86,9 @@ const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> 
   /** TODO: DEVELOPMENT */
   // const apiURL = import.meta.env.MODE === 'development' ? devKey : prodKey;
 
-  /** TODO: PRODUCTION */
-  const apiURL = import.meta.env.API_URL_PROD ?? EL.STR_EMPTY;
+  /** TODO: PRODUCTION (FIX HARD CODED) */
+  // const apiURL = import.meta.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
+  const apiURL = 'https://api.thumbsuprsa.com/sms/roadside-assistance';
 
   console.log('Production API URL KEY:', prodKey);
 
