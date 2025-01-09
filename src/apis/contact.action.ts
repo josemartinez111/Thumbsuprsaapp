@@ -80,14 +80,14 @@ export async function handleSubmitAction(
  */
 const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> => {
   // Environment variables
-  const devKey = import.meta.env.VITE_API_URL_DEV;
+  // const devKey = import.meta.env.VITE_API_URL_DEV;
   const prodKey = import.meta.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
 
   /** TODO: DEVELOPMENT */
-  const apiURL = import.meta.env.MODE === 'development' ? devKey : prodKey;
+  // const apiURL = import.meta.env.MODE === 'development' ? devKey : prodKey;
 
   /** TODO: PRODUCTION */
-  // const apiURL = process.env.API_URL_PROD ?? EL.STR_EMPTY;
+  const apiURL = import.meta.env.API_URL_PROD ?? EL.STR_EMPTY;
 
   console.log('Production API URL KEY:', prodKey);
 
