@@ -81,7 +81,7 @@ export async function handleSubmitAction(
 const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> => {
   // Environment variables
   const devKey = import.meta.env.VITE_API_URL_DEV;
-  const prodKey = process.env.API_URL_PROD;
+  const prodKey = process.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
 
   /** TODO: DEVELOPMENT */
   const apiURL = import.meta.env.MODE === 'development' ? devKey : prodKey;
