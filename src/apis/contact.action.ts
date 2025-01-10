@@ -23,25 +23,42 @@ export type ContactFormPayload = {
   total: string; // Total cost as a string
 };
 
+interface ActionProps {
+  formEl: FormEvent<HTMLFormElement>;
+  selectedServices: Array<string>;
+  totalPrice: string;
+  setFormStatus: (status: string) => void;
+}
+
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 /**
- * Handles the form submission event and calls the API.
- * @param {FormEvent<HTMLFormElement>} formEl - The form submission event.
- * @param {string[]} selectedServices - The services selected by the user.
- * @param {string} totalPrice - The total price for the selected services.
- * @param {(status: string) => void} setFormStatus - Function to set the form submission status.
- * @returns {Promise<void>} - Resolves when the form submission is complete.
+ * Handles the form submission event and sends data to the backend API.
+ * @param {ActionProps} props - The properties required for submission.
+ * @param {FormEvent<HTMLFormElement>} props.formEl - The form submission event.
+ * @param {Array<string>} props.selectedServices - The services selected by the user.
+ * @param {string} props.totalPrice - The total price for the selected services.
+ * @param {(status: string) => void} props.setFormStatus - Callback to update the submission status.
+ * @returns {Promise<void>} - Resolves when the form submission completes.
  */
-export async function handleSubmitAction(
-  formEl: FormEvent<HTMLFormElement>,
-  selectedServices: string[],
-  totalPrice: string,
-  setFormStatus: (status: string) => void,
-): Promise<void> {
+export async function handleSubmitAction({
+  formEl,
+  selectedServices,
+  totalPrice,
+  setFormStatus,
+}: ActionProps): Promise<void> {
+  // Prevent the default browser form submission where the page refreshes
   formEl.preventDefault();
 
   const formData = new FormData(formEl.currentTarget);
+  const servicesTotalPrice = parseFloat(totalPrice.replace(/[^0-9.-]+/g, '')).toLocaleString(
+    'en-US',
+    {
+      style: 'currency',
+      currency: 'USD',
+    },
+  );
+
   const payload: ContactFormPayload = {
     fullName: formData.get('fullName')?.toString() ?? EL.STR_EMPTY,
     phoneNumber: formData.get('phoneNumber')?.toString() ?? EL.STR_EMPTY,
@@ -52,10 +69,7 @@ export async function handleSubmitAction(
     vehicleColor: formData.get('vehicleColor')?.toString() ?? EL.STR_EMPTY,
     licensePlateNumber: formData.get('licensePlateNumber')?.toString() ?? EL.STR_EMPTY,
     services: selectedServices,
-    total: parseFloat(totalPrice.replace(/[^0-9.-]+/g, '')).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }),
+    total: servicesTotalPrice,
     message: formData.get('message')?.toString() ?? '',
   };
 
@@ -63,9 +77,12 @@ export async function handleSubmitAction(
   console.log('Payload being sent to the API:', JSON.stringify(payload, null, 2));
   try {
     let success = await submitContactForm(payload);
-    setFormStatus(success ? `${STLIB.OK}` : `${STLIB.NOT_FOUND}`);
+    setFormStatus(success ? 'success' : 'error');
   } catch (error: unknown) {
-    if (error instanceof Error) console.error(error.message);
+    if (error instanceof Error) {
+      console.error('Error during form submission:', error.message);
+    }
+
     setFormStatus(`${STLIB.INTERNAL_SERVER_ERROR}`);
   }
 }
@@ -99,21 +116,24 @@ const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> 
   try {
     const response = await axios.post(apiURL, payload);
 
-    if (response.status === STLIB.OK) {
+    // Check if the response indicates success
+    if (response.data.success === true) {
       console.log(
-        '\nForm submitted successfully:',
-        JSON.stringify(response.data, null, 2), // Format the `data` part of the response
+        '\n| [SUCCESS]-->?(SMS SENT) | Form submitted successfully:\n',
+        JSON.stringify(response.data, null, 2), // Log formatted response for debugging
       );
-
-      console.log('Response status:', response.status);
-      return true;
+      return true; // Indicate success
     }
 
-    console.error(`Unexpected response status: ${response.status}`);
-    return false;
+    // Log unexpected payloads for debugging
+    console.error('Unexpected response payload:', JSON.stringify(response.data, null, 2));
+
+    return false; // Indicate failure for mismatched payload
   } catch (error: unknown) {
-    if (error instanceof Error) console.error(error.message);
-    throw error;
+    if (error instanceof Error) {
+      console.error('Error during form submission:', error.message);
+    }
+    throw error; // Rethrow for upstream error handling
   }
 };
 
