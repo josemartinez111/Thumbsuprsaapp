@@ -14,6 +14,7 @@ export { default as image404 } from './images/misc/404-image.png';
 export { default as fenwayBG } from './images/misc/fenway-city-of-boston.jpg';
 export { default as thumbsupTextLogo } from './images/misc/thumbsup-roadside-assistance.png';
 export { default as thumbsupTextLogoCombo } from './images/misc/thumbsup-logo-text-combo.png';
+export { default as ComputerError } from './images/misc/computer-error.png';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 // PLACEHOLDERS->route
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞

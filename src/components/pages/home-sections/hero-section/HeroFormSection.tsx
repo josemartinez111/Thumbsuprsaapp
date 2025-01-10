@@ -11,7 +11,7 @@ import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import { thumbsupTextLogoCombo } from '../../../../assets';
 import { FWTImage, FWTSocialIconV2, IconNameType } from '../../../../components';
-import { ContactForm, FormFieldOptions } from './ContactForm.tsx';
+import { ContactForm, FormFieldOptions } from './contact-form/ContactForm.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 type SocialIconType = {

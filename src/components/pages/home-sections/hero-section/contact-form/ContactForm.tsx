@@ -4,12 +4,13 @@
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 //                       IMPORTS
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
-import { FunctionComponent, Fragment, FormEvent, ChangeEvent } from 'react';
+import { FunctionComponent, Fragment, FormEvent, ChangeEvent, useRef } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
-import { handleSubmitAction } from '../../../../apis';
+import { handleSubmitAction } from '../../../../../apis';
+import { FormModal } from './FormModal.tsx';
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export type FormFieldOptions = {
@@ -87,6 +88,7 @@ const totalPriceAtom = atom<string>((get) => {
 // Atoms for state management
 const selectedServicesAtom = atom<string[]>([]);
 const formStatusAtom = atom<string | null>(null);
+const isModalVisibleAtom = atom<boolean>(false); // NEW: Controls Modal Visibility
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
 export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts }) => {
@@ -94,7 +96,10 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   const [selectedServices, setSelectedServices] = useAtom(selectedServicesAtom);
   const [totalPrice] = useAtom(totalPriceAtom);
   const [formStatus, setFormStatus] = useAtom(formStatusAtom);
+  const [isModalVisible, setModalVisible] = useAtom(isModalVisibleAtom); // NEW: Modal State Hook
 
+  // Inside the `ContactForm` component:
+  const formRef = useRef<HTMLFormElement>(null);
   // Export services as an array for easy iteration in the UI
   const services = Object.keys(servicesConfig) as Array<ServicesOptions>;
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -108,53 +113,78 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
     );
   };
 
-  const sendForm = (formEl: FormEvent<HTMLFormElement>) => {
+  const sendForm = async (formEl: FormEvent<HTMLFormElement>) => {
     // Map selected services to backend-compatible enum values
     const mappedServices = selectedServices.map((service: string) => {
       return servicesConfig[service].backendKey;
     });
 
-    // Call the action handler with mapped services
-    return handleSubmitAction(formEl, mappedServices, totalPrice, setFormStatus);
+    await handleSubmitAction({
+      formEl: formEl,
+      selectedServices: mappedServices,
+      totalPrice: totalPrice,
+      setFormStatus: setFormStatus,
+    });
+
+    // Show modal only after formStatus is updated
+    setModalVisible(true);
+  };
+
+  // Modal Close Handler
+  const handleModalClose = () => {
+    setModalVisible(false);
+
+    if (formStatus === 'success') {
+      setSelectedServices([]);
+      formRef.current?.reset(); // Reset form fields
+
+      // Clear controlled input states (if any)
+      formFieldOpts.forEach((field) => {
+        const element = document.querySelector(
+          `input[name="${field.name}"]`,
+        ) as HTMLInputElement | null;
+        if (element) {
+          element.value = '';
+        }
+      });
+
+      // Reset the textarea field
+      const messageField = document.querySelector(
+        `textarea[name="message"]`,
+      ) as HTMLTextAreaElement | null;
+      if (messageField) {
+        messageField.value = '';
+      }
+    }
   };
   // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
   return (
     <Fragment>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
+      {/*  Form */}
       <form
         onSubmit={sendForm}
         className='mt-8 cursor-pointer space-y-6 rounded-lg bg-white p-6 shadow-md'
       >
         {/* Input Fields */}
-        {formFieldOpts.map((field: FormFieldOptions, index) => {
-          if (field.name === 'phoneNumber') {
-            return (
-              <input
-                key={index}
-                {...field} // Spread all properties
-                className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-                  if (value.length > 3 && value.length <= 6) {
-                    value = `${value.slice(0, 3)}-${value.slice(3)}`; // Format as "000-000"
-                  } else if (value.length > 6) {
-                    value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`; // Format as "000-000-0000"
-                  }
-                  event.target.value = value; // Update the input value
-                }}
-              />
-            );
-          }
-
-          // Default case for other fields
-          return (
-            <input
-              key={index}
-              {...field} // Spread all properties
-              className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
-            />
-          );
-        })}
+        {formFieldOpts.map((field: FormFieldOptions, index) => (
+          <input
+            key={index}
+            {...field}
+            className='w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-black shadow-inner'
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              if (field.name === 'phoneNumber') {
+                let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+                if (value.length > 3 && value.length <= 6) {
+                  value = `${value.slice(0, 3)}-${value.slice(3)}`; // Format as "000-000"
+                } else if (value.length > 6) {
+                  value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`; // Format as "000-000-0000"
+                }
+                event.target.value = value;
+              }
+            }}
+          />
+        ))}
 
         {/* Textarea */}
         <textarea
@@ -166,11 +196,9 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
           className='w-full rounded-lg border border-gray-300 px-4 pt-3 text-sm text-black shadow-inner'
         />
 
-        {/* Service Options & Price at the Top */}
+        {/* Service Options & Price */}
         <div className='space-y-4'>
           <p className='text-sm font-semibold text-black'>I'm interested in...</p>
-
-          {/* Service Buttons */}
           <div className='space-y-2'>
             {services.map((service: ServicesOptions) => (
               <button
@@ -190,8 +218,6 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
               </button>
             ))}
           </div>
-
-          {/* Dynamic Price */}
           <div className='mt-2 text-center text-lg font-bold'>
             {totalPrice !== '$0.00' ? (
               <p>
@@ -203,7 +229,8 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
             )}
           </div>
           <p className='text-center font-bold text-reggie-orange'>
-            All services do not include taxes plus mileage.
+            All Services must be Paid in Full, prior to Receiving Services. All Services do not
+            include Taxes plus mileage.
           </p>
         </div>
 
@@ -221,17 +248,30 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
           <FaRegPaperPlane className='mr-2 w-6 font-semibold' />
           Send Message
         </button>
-
-        {/* Submission Status */}
-        {formStatus === 'success' && (
-          <p className='text-center text-green-500'>
-            Your request has been sent successfully!
-          </p>
-        )}
-        {formStatus === 'error' && (
-          <p className='text-center text-red-500'>Something went wrong. Please try again.</p>
-        )}
       </form>
+
+      {/* Modal Integration */}
+      {isModalVisible && (
+        <FormModal
+          status={formStatus === 'success' ? 'success' : 'error'} // Pass modal status
+          message={
+            formStatus === 'success'
+              ? `Thank you for your submission. A Thumbs Up Roadside Assistance Dispatcher will be in contact with you shortly. For more information contact us here ( Phone Number Button )`
+              : 'Something went wrong. Please try again.'
+          } // Pass message dynamically
+          onClose={handleModalClose} // Pass close handler
+        />
+      )}
+
+      {/*<FormModal*/}
+      {/*  status={formStatus === 'success' ? 'success' : 'success'} // Pass modal status*/}
+      {/*  message={*/}
+      {/*    formStatus === 'success'*/}
+      {/*      ? `Thank you for your submission. A Thumbs Up Roadside Assistance Dispatcher will be in contact with you shortly. For more information contact us here ( Phone Number Button )`*/}
+      {/*      : 'Something went wrong. Please try again.'*/}
+      {/*  } // Pass message dynamically*/}
+      {/*  onClose={handleModalClose} // Pass close handler*/}
+      {/*/>*/}
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
     </Fragment>
   );

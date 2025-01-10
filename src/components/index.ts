@@ -17,6 +17,7 @@ export * from './utils/SocialIcons';
 export * from './utils/YoutubeEmbed';
 export * from './utils/FWTScrollingEffect';
 export * from './utils/BGImageOverlay';
+export * from './utils/PhoneNumberBanner';
 export * from './utils/accordion/AccordionInfoSection';
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 

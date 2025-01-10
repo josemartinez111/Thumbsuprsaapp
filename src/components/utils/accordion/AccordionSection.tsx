@@ -29,7 +29,7 @@ export const AccordionSection: FunctionComponent<AccordionSectionProps> = ({
   return (
     <Fragment>
       {/*  ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞  */}
-      <section className='relative z-10 bg-transparent py-10 sm:py-16 lg:py-24'>
+      <section className='relative bg-transparent py-10 sm:py-16 lg:py-24'>
         <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl text-center'>
             <h2 className='text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl dark:text-white'>
