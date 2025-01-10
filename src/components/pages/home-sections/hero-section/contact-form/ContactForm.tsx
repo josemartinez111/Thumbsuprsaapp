@@ -256,18 +256,21 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
           status={formStatus === 'success' ? 'success' : 'error'} // Pass modal status
           message={
             formStatus === 'success'
-              ? `Thank you for your submission. A Thumbs Up Roadside Assistance Dispatcher will be in contact with you shortly. For more information contact us here ( Phone Number Button )`
+              ? `Thank you for your submission. A Thumbs Up Roadside Assistance dispatcher 
+            will contact you shortly, or press the phone number button to contact us directly.`
               : 'Something went wrong. Please try again.'
           } // Pass message dynamically
           onClose={handleModalClose} // Pass close handler
         />
       )}
 
+      {/* TODO: ONLY FOR DEVELOPMENT TO TEST MODAL ∞∞∞ */}
       {/*<FormModal*/}
       {/*  status={formStatus === 'success' ? 'success' : 'success'} // Pass modal status*/}
       {/*  message={*/}
-      {/*    formStatus === 'success'*/}
-      {/*      ? `Thank you for your submission. A Thumbs Up Roadside Assistance Dispatcher will be in contact with you shortly. For more information contact us here ( Phone Number Button )`*/}
+      {/*    formStatus !== 'success'*/}
+      {/*      ? `Thank you for your submission. A Thumbs Up Roadside Assistance dispatcher */}
+      {/*      will contact you shortly, or press the phone number button to contact us directly.`*/}
       {/*      : 'Something went wrong. Please try again.'*/}
       {/*  } // Pass message dynamically*/}
       {/*  onClose={handleModalClose} // Pass close handler*/}
