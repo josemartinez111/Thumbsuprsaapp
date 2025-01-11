@@ -28,6 +28,7 @@ interface ActionProps {
   selectedServices: Array<string>;
   totalPrice: string;
   setFormStatus: (status: string) => void;
+  setModalVisible: (isVisible: boolean) => void;
 }
 
 // ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
@@ -46,6 +47,7 @@ export async function handleSubmitAction({
   selectedServices,
   totalPrice,
   setFormStatus,
+  setModalVisible,
 }: ActionProps): Promise<void> {
   // Prevent the default browser form submission where the page refreshes
   formEl.preventDefault();
@@ -82,18 +84,12 @@ export async function handleSubmitAction({
 
     if (!success) {
       setFormStatus('error');
+      setModalVisible(true);
       return;
     }
 
     setFormStatus('success');
-
-    // Reset form status after delay
-    setTimeout(
-      () => {
-        setFormStatus('idle');
-      },
-      6000, // 2 seconds
-    );
+    setModalVisible(true);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error during form submission:', error.message);
@@ -130,8 +126,8 @@ const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> 
   try {
     // Add artificial delay during development
     await new Promise((resolve) => {
-      setTimeout(resolve, 2500);
-    }); // 2.5 seconds delay
+      setTimeout(resolve, 2300);
+    }); // 2.3 seconds delay
 
     const response = await axios.post(API_URL_ENDPOINT, payload);
 
