@@ -114,23 +114,22 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   };
 
   const sendForm = async (formEl: FormEvent<HTMLFormElement>) => {
-    // Set initial sending state
+    // Initialize the form submission process by setting status to 'sending'
     setFormStatus('sending');
 
-    // Map selected services to backend-compatible enum values
-    const mappedServices = selectedServices.map((service: string) => {
-      return servicesConfig[service].backendKey;
-    });
+    // Convert user-friendly service names to backend API compatible enum values
+    const mappedServices = selectedServices.map(
+      (service: string) => servicesConfig[service].backendKey,
+    );
 
+    // Submit form data to API and handle state changes
     await handleSubmitAction({
-      formEl: formEl,
+      formEl,
       selectedServices: mappedServices,
-      totalPrice: totalPrice,
-      setFormStatus: setFormStatus,
+      totalPrice,
+      setFormStatus,
+      setModalVisible, // Pass modal visibility control to action handler
     });
-
-    // Show modal only after formStatus is updated
-    setModalVisible(true);
   };
 
   // Modal Close Handler
