@@ -49,6 +49,8 @@ export async function handleSubmitAction({
 }: ActionProps): Promise<void> {
   // Prevent the default browser form submission where the page refreshes
   formEl.preventDefault();
+  // Set initial sending state
+  setFormStatus('sending');
 
   const formData = new FormData(formEl.currentTarget);
   const servicesTotalPrice = parseFloat(totalPrice.replace(/[^0-9.-]+/g, '')).toLocaleString(
@@ -70,14 +72,28 @@ export async function handleSubmitAction({
     licensePlateNumber: formData.get('licensePlateNumber')?.toString() ?? EL.STR_EMPTY,
     services: selectedServices,
     total: servicesTotalPrice,
-    message: formData.get('message')?.toString() ?? '',
+    message: formData.get('message')?.toString() ?? EL.STR_EMPTY,
   };
 
   // Log for debugging purposes
   console.log('Payload being sent to the API:', JSON.stringify(payload, null, 2));
   try {
     let success = await submitContactForm(payload);
-    setFormStatus(success ? 'success' : 'error');
+
+    if (!success) {
+      setFormStatus('error');
+      return;
+    }
+
+    setFormStatus('success');
+
+    // Reset form status after delay
+    setTimeout(
+      () => {
+        setFormStatus('idle');
+      },
+      6000, // 2 seconds
+    );
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error during form submission:', error.message);
@@ -98,24 +114,26 @@ export async function handleSubmitAction({
 const submitContactForm = async (payload: ContactFormPayload): Promise<boolean> => {
   // Environment variables
   // const devKey = import.meta.env.VITE_API_URL_DEV;
-  const prodKey = import.meta.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
-
-  /** TODO: DEVELOPMENT */
-  // const apiURL = import.meta.env.MODE === 'development' ? devKey : prodKey;
+  // const prodKey = import.meta.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
 
   /** TODO: PRODUCTION (FIX HARD CODED) */
-  const apiURL = import.meta.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
+  const API_URL_ENDPOINT = import.meta.env.VITE_API_URL_PROD ?? EL.STR_EMPTY;
   // const apiURL = 'https://api.thumbsuprsa.com/sms/roadside-assistance';
 
   // TODO: Remove logs before deployment to production
-  console.log('Production API URL KEY:', prodKey);
-
-  console.log('Environment mode:', import.meta.env.MODE);
-  console.log('API URL:', apiURL);
-  // Log the payload being sent to the API
-  console.log('Payload being sent to the API:', JSON.stringify(payload, null, 2));
+  // console.log('Production API URL KEY:', prodKey);
+  //
+  // console.log('Environment mode:', import.meta.env.MODE);
+  // console.log('API URL:', apiURL);
+  // // Log the payload being sent to the API
+  // console.log('Payload being sent to the API:', JSON.stringify(payload, null, 2));
   try {
-    const response = await axios.post(apiURL, payload);
+    // Add artificial delay during development
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2500);
+    }); // 2.5 seconds delay
+
+    const response = await axios.post(API_URL_ENDPOINT, payload);
 
     // Check if the response indicates success
     if (response.data.success === true) {

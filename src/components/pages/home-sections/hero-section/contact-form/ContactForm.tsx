@@ -87,7 +87,7 @@ const totalPriceAtom = atom<string>((get) => {
 
 // Atoms for state management
 const selectedServicesAtom = atom<string[]>([]);
-const formStatusAtom = atom<string | null>(null);
+const formStatusAtom = atom<string>('idle'); // Changed from atom<string | null>(null)
 const isModalVisibleAtom = atom<boolean>(false); // NEW: Controls Modal Visibility
 //⚫️ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞
 
@@ -114,6 +114,9 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
   };
 
   const sendForm = async (formEl: FormEvent<HTMLFormElement>) => {
+    // Set initial sending state
+    setFormStatus('sending');
+
     // Map selected services to backend-compatible enum values
     const mappedServices = selectedServices.map((service: string) => {
       return servicesConfig[service].backendKey;
@@ -237,16 +240,21 @@ export const ContactForm: FunctionComponent<ContactFormProps> = ({ formFieldOpts
         {/* Submit Button */}
         <button
           type='submit'
+          disabled={formStatus === 'sending'}
           className={twMerge(
             clsx(
-              '!mt-6 flex w-full items-center justify-center rounded-lg',
+              '!mt-6 flex w-full items-center justify-center rounded-lg font-semibold',
               'bg-thumbsup-dark px-4 py-3 text-sm tracking-wide',
               'text-white hover:bg-reggie-orange',
             ),
           )}
         >
           <FaRegPaperPlane className='mr-2 w-6 font-semibold' />
-          Send Message
+          {formStatus === 'sending'
+            ? 'Sending Message...'
+            : formStatus === 'success'
+              ? 'Message Sent!'
+              : 'Send Message'}
         </button>
       </form>
 
